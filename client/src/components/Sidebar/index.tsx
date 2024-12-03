@@ -23,10 +23,13 @@ import { usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import Link from "next/link";
 import { setIsSidebarCollapsed } from "@/state";
+import { useGetProjectsQuery } from "@/state/api";
 
 const Sidebar = () => {
   const [showProjects, setShowProjects] = useState(true);
   const [showPriority, setShowPriority] = useState(true);
+
+  const { data: projects } = useGetProjectsQuery();
 
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
@@ -52,7 +55,7 @@ const Sidebar = () => {
                 dispatch(setIsSidebarCollapsed(!isSidebarCollapsed))
               }
             >
-              <X className="w-6 h-6 text-gray-800 hover:text-gray-500 dark:text-white" />
+              <X className="h-6 w-6 text-gray-800 hover:text-gray-500 dark:text-white" />
             </button>
           )}
         </div>
@@ -60,10 +63,10 @@ const Sidebar = () => {
         <div className="flex items-center gap-5 border-y-[1.5px] border-gray-200 px-8 py-4 dark:border-gray-700">
           <Image src="/logo.png" alt="Logo" width={40} height={40} />
           <div>
-            <h3 className="font-bold tracking-wide text-md dark:text-gray-200">
+            <h3 className="text-md font-bold tracking-wide dark:text-gray-200">
               ProMgnt Team
             </h3>
-            <div className="flex items-start gap-2 mt-1">
+            <div className="mt-1 flex items-start gap-2">
               <LockIcon className="mt-[0.1rem] h-3 w-3 text-gray-500 dark:text-gray-400" />
               <p className="text-xs text-gray-500">Private</p>
             </div>
@@ -81,26 +84,35 @@ const Sidebar = () => {
         {/* Projects links */}
         <button
           onClick={() => setShowProjects((prev) => !prev)}
-          className="flex items-center justify-between w-full px-8 py-3 text-gray-500"
+          className="flex w-full items-center justify-between px-8 py-3 text-gray-500"
         >
           <span className="">Projects</span>
           {showProjects ? (
-            <ChevronUp className="w-5 h-5" />
+            <ChevronUp className="h-5 w-5" />
           ) : (
-            <ChevronDown className="w-5 h-5" />
+            <ChevronDown className="h-5 w-5" />
           )}
         </button>
         {/* Project lists */}
+        {showProjects &&
+          projects?.map((project) => (
+            <SidebarLink
+              key={project.id}
+              icon={Briefcase}
+              label={project.name}
+              href={`/projects/${project.id}`}
+            />
+          ))}
         {/* Priorities links */}
         <button
           onClick={() => setShowPriority((prev) => !prev)}
-          className="flex items-center justify-between w-full px-8 py-3 text-gray-500"
+          className="flex w-full items-center justify-between px-8 py-3 text-gray-500"
         >
           <span className="">Priority</span>
           {showPriority ? (
-            <ChevronUp className="w-5 h-5" />
+            <ChevronUp className="h-5 w-5" />
           ) : (
-            <ChevronDown className="w-5 h-5" />
+            <ChevronDown className="h-5 w-5" />
           )}
         </button>
         {showPriority && (
@@ -153,7 +165,7 @@ const SidebarLink = ({ href, icon: Icon, label }: SideBarLinkProps) => {
         {isActive && (
           <div className="absolute left-0 top-0 h-[100%] w-[5px] bg-blue-200"></div>
         )}
-        <Icon className="w-6 h-6 text-gray-800 dark:text-gray-100" />
+        <Icon className="h-6 w-6 text-gray-800 dark:text-gray-100" />
         <span className={`font-medium text-gray-800 dark:text-gray-100`}>
           {label}
         </span>

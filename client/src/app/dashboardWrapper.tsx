@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
-import Navbar from "./(components)/Navbar";
-import Sidebar from "./(components)/Sidebar";
+import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
 import StoreProvider, { useAppSelector } from "./redux";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
@@ -19,7 +19,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   });
 
   return (
-    <div className="flex w-full min-h-screen text-gray-900 bg-gray-50">
+    <div className="flex min-h-screen w-full bg-gray-50 text-gray-900">
       <Sidebar />
       <main
         className={`flex w-full flex-col bg-gray-50 dark:bg-dark-bg ${isSidebarCollapsed ? "" : "md:pl-64"}`}
