@@ -80,4 +80,4 @@ export const api = createApi({
   }),
 });
 
-export const {} = api;
+export const { useGetProjectsQuery, useCreateProjectMutation } = api;
