@@ -109,7 +109,7 @@ export const api = createApi({
       ],
     }),
     getUsers: build.query<User[], void>({
-      query: () => "users",
+      query: () => "user",
       providesTags: ["Users"],
     }),
     search: build.query<SearchResults, string>({
