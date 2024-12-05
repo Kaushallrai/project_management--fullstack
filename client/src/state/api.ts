@@ -119,7 +119,7 @@ export const api = createApi({
       providesTags: ["Users"],
     }),
     getTeams: build.query<Team[], void>({
-      query: () => "teams",
+      query: () => "team",
       providesTags: ["Teams"],
     }),
     search: build.query<SearchResults, string>({
